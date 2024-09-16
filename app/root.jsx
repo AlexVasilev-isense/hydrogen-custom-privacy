@@ -15,6 +15,7 @@ import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
+import CookieBar from '~/components/CookieBar';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -147,6 +148,11 @@ export function Layout({children}) {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
+        <CookieBar
+            store={'shoesforuse.myshopify.com'} // add your shopify store name here
+            customer_id={0} // pass the customer id if it is not logged you can pass 0
+            trackingConsent={() => {}} // you can add custom callback function if you have analytics it will return true if customer accept and false if he decline
+        />
       </head>
       <body>
         {data ? (
