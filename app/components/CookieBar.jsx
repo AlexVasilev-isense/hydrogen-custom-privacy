@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
+import {useLoadScript} from '@shopify/hydrogen-react';
 
 export default function CookieBar({ store, customer_id = 0, trackingConsent = () => {}}) {
-    useEffect(() => {
+    const scriptStatus = useLoadScript('https://gdprcdn.b-cdn.net/webroot/js/solidjs/dist/bundle.js');
+
+    /*useEffect(() => {
         window.Shopify = {};
         window.iSenseAppSettings = {
             shop: store,
@@ -24,7 +27,7 @@ export default function CookieBar({ store, customer_id = 0, trackingConsent = ()
         return () => {
             document.body.removeChild(script);
         };
-    }, []);
+    }, []);*/
 
     return (
         <></>
