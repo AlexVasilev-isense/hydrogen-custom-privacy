@@ -1,4 +1,4 @@
-import {useNonce, Script, getShopAnalytics, Analytics} from '@shopify/hydrogen';
+import {useNonce, getShopAnalytics, Analytics} from '@shopify/hydrogen';
 import {defer} from '@shopify/remix-oxygen';
 import {
   Links,
@@ -16,6 +16,7 @@ import appStyles from '~/styles/app.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import CookieBar from '~/components/CookieBar';
+import {Script} from '@shopify/hydrogen';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -161,8 +162,13 @@ export function Layout({children}) {
         ) : (
           children
         )}
-
-        <Script waitForHydration src="https://consentmo-dev.com/webroot/js/solidjs/dist/bundle.js" />
+        <CookieBar
+            store={'shoesforuse.myshopify.com'} // add your shopify store name here
+            customer_id={0} // pass the customer id if it is not logged you can pass 0
+            trackingConsent={() => {}} // you can add custom callback function if you have analytics it will return true if customer accept and false if he decline
+        />
+        
+        <Script waitForHydration src="https://cdn.shopify.com/shopifycloud/consent-tracking-api/v0.1/consent-tracking-api.js" />
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>
