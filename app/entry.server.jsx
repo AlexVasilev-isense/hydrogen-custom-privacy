@@ -18,6 +18,8 @@ export default async function handleRequest(
   context,
 ) {
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
+    connectSrc: ['https://consentmo-dev.com/users/versioning', 'https://consentmo-geo.com/users/checkIp', 'https://consentmo-dev.com/users/getCookieConsentSettings'],
+    scriptSrcElem: ['https://consentmo-dev.com/webroot/js/solidjs/dist/bundle.js'],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,

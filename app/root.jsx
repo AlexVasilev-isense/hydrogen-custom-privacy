@@ -1,4 +1,4 @@
-import {useNonce, getShopAnalytics, Analytics} from '@shopify/hydrogen';
+import {useNonce, Script, getShopAnalytics, Analytics} from '@shopify/hydrogen';
 import {defer} from '@shopify/remix-oxygen';
 import {
   Links,
@@ -148,11 +148,6 @@ export function Layout({children}) {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
-        <CookieBar
-            store={'shoesforuse.myshopify.com'} // add your shopify store name here
-            customer_id={0} // pass the customer id if it is not logged you can pass 0
-            trackingConsent={() => {}} // you can add custom callback function if you have analytics it will return true if customer accept and false if he decline
-        />
       </head>
       <body>
         {data ? (
@@ -166,6 +161,8 @@ export function Layout({children}) {
         ) : (
           children
         )}
+
+        <Script waitForHydration src="https://consentmo-dev.com/webroot/js/solidjs/dist/bundle.js" />
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>

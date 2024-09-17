@@ -1,36 +1,20 @@
 import React, { useEffect } from 'react';
-import {useLoadScript} from '@shopify/hydrogen-react';
+import {useNonce, Script} from '@shopify/hydrogen';
+import {
+    Scripts,
+    ScrollRestoration,
+  } from '@remix-run/react';
 
 export default function CookieBar({ store, customer_id = 0, trackingConsent = () => {}}) {
-    const scriptStatus = useLoadScript('https://gdprcdn.b-cdn.net/webroot/js/solidjs/dist/bundle.js');
+    const nonce = useNonce();
 
-    /*useEffect(() => {
-        window.Shopify = {};
-        window.iSenseAppSettings = {
-            shop: store,
-            customer_id: customer_id || 0,
-            AdminBarInjector: true,
-            setTrackingConsent: (value) => {
-                if (value) {
-                    console.log('valid consent');
-                } else {
-                    console.log('invalid consent')
-                }
-            }
-        }
-        // Load script here
-        const script = document.createElement('script');
-        script.src = 'https://gdprcdn.b-cdn.net/webroot/js/solidjs/dist/bundle.js';
-        document.body.appendChild(script);
-
-        // Clean up function to remove the script when component unmounts
-        return () => {
-            document.body.removeChild(script);
-        };
-    }, []);*/
 
     return (
-        <></>
+        <>
+            <Script waitForHydration src="https://consentmo-dev.com/webroot/js/solidjs/dist/bundle.js" />
+            <ScrollRestoration nonce={nonce} />
+            <Scripts nonce={nonce} />
+        </>
         )
     ; 
 }
