@@ -19,7 +19,7 @@ export default async function handleRequest(
 ) {
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     connectSrc: ["'self'",'https://cdn.shopify.com/*', 'https://shopify.com', 'https://consentmo-dev.com/users/versioning', 'https://consentmo-geo.com/users/checkIp', 'https://consentmo-dev.com/users/getCookieConsentSettings'],
-    scriptSrcElem: ["'self'",'https://cdn.shopify.com/*', 'https://shopify.com', 'https://consentmo-dev.com/webroot/js/solidjs/dist/bundle.js'],
+    defaultSrc: ["'self'",'https://cdn.shopify.com/*', 'https://shopify.com', 'https://cdn.shopify.com/oxygen-v2/1267/27664/57655/899490/assets/manifest-00cd8cd6.js', 'https://consentmo-dev.com/webroot/js/solidjs/dist/bundle.js'],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
