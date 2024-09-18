@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
-import {Script} from '@shopify/hydrogen';
+import {Script,getCustomerPrivacy} from '@shopify/hydrogen';
 
 export default function CookieBar({ store, customer_id = 0, trackingConsent = () => {}}) {
+    
+    const consent = getCustomerPrivacy();
+
     useEffect(() => {
         window.Shopify = {};
         window.iSenseAppSettings = {
@@ -16,6 +19,33 @@ export default function CookieBar({ store, customer_id = 0, trackingConsent = ()
                 }
             }
         }
+
+        if (!consent || !consent?.setTrackingConsent) {
+            console.log('not loaded');
+            return;
+        }
+
+        const trackingConsent = {
+            marketing: true,
+            analytics: true,
+            preferences: true,
+            sale_of_data: true,
+          }
+      
+          consent.setTrackingConsent(
+            trackingConsent,
+            (result) => {
+                console.log('asd');
+                console.log(result);
+              if (result?.error) {
+                console.error(
+                  'Error syncing ThirdParty with Shopify customer privacy',
+                  result,
+                );
+                return;
+              }
+            },
+          );
     }, []);
 
     return (

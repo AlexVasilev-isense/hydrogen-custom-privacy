@@ -16,6 +16,7 @@ import appStyles from '~/styles/app.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import CookieBar from '~/components/CookieBar';
+import ThirdPartyConsent from '~/components/ThirdPartyConsent';
 import {Script} from '@shopify/hydrogen';
 
 /**
@@ -76,10 +77,7 @@ export async function loader(args) {
     consent: {
       checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
       storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
-      withPrivacyBanner: true,
-      // localize the privacy banner
-      country: args.context.storefront.i18n.country,
-      language: args.context.storefront.i18n.language,
+      withPrivacyBanner: false,
     },
   });
 }
@@ -162,13 +160,14 @@ export function Layout({children}) {
         ) : (
           children
         )}
-        <CookieBar
+        {/*<CookieBar
             store={'shoesforuse.myshopify.com'} // add your shopify store name here
             customer_id={0} // pass the customer id if it is not logged you can pass 0
             trackingConsent={() => {}} // you can add custom callback function if you have analytics it will return true if customer accept and false if he decline
-        />
+        />*/}
         
-        <Script waitForHydration src="https://cdn.shopify.com/shopifycloud/consent-tracking-api/v0.1/consent-tracking-api.js" />
+        <Script src='https://cdn.shopify.com/shopifycloud/consent-tracking-api/v0.1/consent-tracking-api.js'></Script>
+        <ThirdPartyConsent/>
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>
