@@ -20,6 +20,7 @@ export default async function handleRequest(
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     //connectSrc: ["'self'",'https://cdn.shopify.com/*', 'https://shopify.com', 'https://consentmo-geo.com/users/checkIp', 'https://consentmo-dev.com/', 'https://gdpr.apps.isenselabs.com/', 'https://notify.bugsnag.com/'],
     //defaultSrc: ['https://consentmo-dev.com/', 'https://gdpr.apps.isenselabs.com/'],
+    connectSrc: ['https://notify.bugsnag.com/'],
     defaultSrc: ['https://gdprstorage.b-cdn.net/'],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
