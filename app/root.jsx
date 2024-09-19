@@ -162,8 +162,6 @@ export function Layout({children}) {
         ) : (
           children
         )}
-        
-        <Script src='https://cdn.shopify.com/shopifycloud/consent-tracking-api/v0.1/consent-tracking-api.js'></Script>
 
         <ThirdPartyConsent/>
 
