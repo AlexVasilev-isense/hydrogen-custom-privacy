@@ -17,6 +17,7 @@ import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import {ThirdPartyConsent} from '~/components/ThirdPartyConsent';
 import {Script} from '@shopify/hydrogen';
+import CookieBar from '~/components/CookieBar';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -149,6 +150,7 @@ export function Layout({children}) {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
+        <Script src='https://cdn.shopify.com/shopifycloud/consent-tracking-api/v0.1/consent-tracking-api.js?shpxid=281d7956-8B73-4AF4-5390-2B7E6F8AD4C4'></Script>
       </head>
       <body>
         {data ? (
@@ -163,7 +165,12 @@ export function Layout({children}) {
           children
         )}
         
-        <Script src='https://cdn.shopify.com/shopifycloud/consent-tracking-api/v0.1/consent-tracking-api.js'></Script>
+
+        {/*<CookieBar
+            store={'shoesforuse.myshopify.com'} // add your shopify store name here
+            customer_id={0} // pass the customer id if it is not logged you can pass 0
+            trackingConsent={() => {}} // you can add custom callback function if you have analytics it will return true if customer accept and false if he decline
+        />*/}
 
         <ThirdPartyConsent/>
 

@@ -18,7 +18,7 @@ import {
         return;
       }
   
-      const trackingConsent = {
+      /*const trackingConsent = {
         marketing: getThirdPartyConsentStatus('marketing'),
         analytics: getThirdPartyConsentStatus('analytics'),
         preferences: getThirdPartyConsentStatus('preferences'),
@@ -37,7 +37,20 @@ import {
           }
           ready();
         },
+      );*/
+
+      window.Shopify.customerPrivacy.setTrackingConsent(
+        {
+        "marketing": false,
+        "analytics": true,
+        "preferences": false,
+        "headlessStorefront": true,
+        "checkoutRootDomain": "shoesforuse.myshopify.com/checkouts",
+        "storefrontRootDomain": "shoesforuse.myshopify.com",
+        "storefrontAccessToken": "dc6c137b650c389574b3303ffb96f66c"
+        }, () => console.log(window.Shopify.customerPrivacy.currentVisitorConsent())
       );
+      //console.log(window.Shopify.customerPrivacy.currentVisitorConsent());
     }, [consent, ready]);
   
     useEffect(() => {
