@@ -1,60 +1,38 @@
-import {
+  import {
     useAnalytics,
-    getCustomerPrivacy,
-    useLoadScript,
+    getCustomerPrivacy
   } from '@shopify/hydrogen';
-  import { useEffect, useCallback } from 'react';
+  import { useEffect } from 'react';
   
-  const consentmoConsentSdkUrl = `https://gdpr.apps.isenselabs.com/webroot/js/solidjs/dist/bundle.js`;
-  
-  export default function ConsentmoConsent() {
+  const consentmoConsentSdkUrl = 'https://consentmo-dev.com/webroot/js/solidjs/dist/bundle.js';
+  let areSettingsSet = false;
+
+  export default function ConsentmoConsent({ store, customer_id = 0 }) {
     const consent = getCustomerPrivacy();
     const { register } = useAnalytics();
     const { ready } = register('ConsentmoConsent');
-    const consentmoConsentSdkStatus = 'done';
-  
-    const consentmoConsentCallback = useCallback(() => {
-        console.log(consent);
 
-      if (!consent || !consent?.setTrackingConsent) {
-        console.log('not loaded');
-        return;
-      }
-  
-      const trackingConsent = {
-        marketing: true,
-        analytics: true,
-        preferences: true,
-        sale_of_data: true,
-      }
-  
-      consent.setTrackingConsent(
-        trackingConsent,
-        (result) => {
-          if (result?.error) {
-            setTimeout(() => {
-                consentmoConsentCallback();
-            }, 2000);
-            console.error(
-              'Error syncing ThirdParty with Shopify customer privacy',
-              result,
-            );
-            return;
-          }
-  
-          ready();
-        },
-      );
-    }, [consent, ready]);
-  
     useEffect(() => {
-      if (consentmoConsentSdkStatus !== 'done') {
+      if (!consent || !consent?.setTrackingConsent) {
         return;
       }
-  
-      //window.ConsentmoConsent.onChange = consentmoConsentCallback;
-      consentmoConsentCallback();
-    }, [consentmoConsentCallback, consentmoConsentSdkStatus]);
+
+      if(!areSettingsSet) {
+        window.iSenseAppSettings = {
+            shop: store,
+            customer_id: customer_id || 0,
+            AdminBarInjector: true,
+            loadFeature: ''
+        }
+        areSettingsSet = true;
+
+        const script = document.createElement('script');
+        script.src = consentmoConsentSdkUrl;
+        document.body.appendChild(script);
+
+        ready();
+      }
+    }, [consent]);
   
     return null;
   }
@@ -66,4 +44,5 @@ import {
       return false;
     }
   }
+  
   

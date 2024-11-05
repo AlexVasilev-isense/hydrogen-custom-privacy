@@ -14,9 +14,12 @@ import {
     const thirdPartyConsentSdkStatus = useLoadScript(thirdPartyConsentSdkUrl);
   
     const thirdPartyConsentCallback = useCallback(() => {
+      console.log('124566');
+      console.log(consent);
       if (!consent || !consent?.setTrackingConsent) {
         return;
       }
+      console.log('124567');
   
       /*const trackingConsent = {
         marketing: getThirdPartyConsentStatus('marketing'),
@@ -39,16 +42,23 @@ import {
         },
       );*/
 
-      window.Shopify.customerPrivacy.setTrackingConsent(
+      console.log('set tracking:');
+      console.log(window.Shopify.customerPrivacy.setTrackingConsent);
+      let x = consent.setTrackingConsent(
         {
-        "marketing": false,
+        "marketing": true,
         "analytics": true,
-        "preferences": false,
+        "preferences": true,
         "headlessStorefront": true,
-        "checkoutRootDomain": "shoesforuse.myshopify.com/checkouts",
+        "checkoutRootDomain": "shoesforuse.myshopify.com",
         "storefrontRootDomain": "shoesforuse.myshopify.com",
         "storefrontAccessToken": "dc6c137b650c389574b3303ffb96f66c"
-        }, () => console.log(window.Shopify.customerPrivacy.currentVisitorConsent())
+        }, (message) => {
+          console.log(window.Shopify.customerPrivacy.currentVisitorConsent());console.log(message);
+          ready();
+          console.log(window.Shopify.customerPrivacy.currentVisitorConsent());
+          console.log(window.Shopify.customerPrivacy.currentVisitorConsent);
+        }
       );
       //console.log(window.Shopify.customerPrivacy.currentVisitorConsent());
     }, [consent, ready]);
